@@ -57,10 +57,9 @@ int main(){
 
   while((ch=fgetc(fp))!=EOF){
 
-    if(isalnum(ch) || ch=='_'){
+    if(isalnum(ch) || ch=='_' || (ch=='.' && i>0 && !strchr(buffer,'.'))){
       buffer[i++]=ch;
     }
-
     else{
       if(i>0){
         buffer[i]='\0';
