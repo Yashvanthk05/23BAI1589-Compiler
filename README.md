@@ -16,4 +16,3 @@ This repo is intended for **academic learning**
 * *Yashvanth Karunakaran*
 
 ---
-# 23BAI1589-Compiler
