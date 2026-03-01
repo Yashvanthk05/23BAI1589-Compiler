@@ -54,8 +54,17 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    NUM = 258,                     /* NUM  */
-    ID = 259                       /* ID  */
+    TYPE = 258,                    /* TYPE  */
+    IDENTIFIER = 259,              /* IDENTIFIER  */
+    NUMBER = 260,                  /* NUMBER  */
+    IF = 261,                      /* IF  */
+    ELSE = 262,                    /* ELSE  */
+    WHILE = 263,                   /* WHILE  */
+    RETURN = 264,                  /* RETURN  */
+    EQ = 265,                      /* EQ  */
+    NE = 266,                      /* NE  */
+    LE = 267,                      /* LE  */
+    GE = 268                       /* GE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -64,23 +73,21 @@ extern int yydebug;
 #define YYEOF 0
 #define YYerror 256
 #define YYUNDEF 257
-#define NUM 258
-#define ID 259
+#define TYPE 258
+#define IDENTIFIER 259
+#define NUMBER 260
+#define IF 261
+#define ELSE 262
+#define WHILE 263
+#define RETURN 264
+#define EQ 265
+#define NE 266
+#define LE 267
+#define GE 268
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-union YYSTYPE
-{
-#line 46 "tree.y"
-
-    int ival;
-    char *name;
-    struct Node *node;
-
-#line 81 "y.tab.h"
-
-};
-typedef union YYSTYPE YYSTYPE;
+typedef int YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

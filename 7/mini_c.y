@@ -3,7 +3,8 @@
 
 void yyerror(char *s);
 int yylex();
-int errors=0
+int errors=0;
+extern FILE *yyin;
 %}
 
 %token TYPE IDENTIFIER NUMBER
@@ -14,21 +15,21 @@ int errors=0
 %left '<' '>' LE GE
 %left '+' '-'
 %left '*' '/'
-%%
 
+%%
 program: statement_list { if(!errors) printf("Syntax is Correct\n"); }
          ;
 statement_list: statement_list statement
                 | statement
                 ;
-statement:  TYPE IDENTIFIER ';' { printf("Declaration OK\n"); }
-            | TYPE IDENTIFIER '=' expression ';'    { printf("Decl + Init OK\n"); }
-            | IDENTIFIER '=' expression ';' { printf("Assignment OK\n"); }
-            | IF '(' expression ')' statement   { printf("If-stmt OK\n"); }
+statement:  TYPE IDENTIFIER ';' { printf("Type Declaration\n"); }
+            | TYPE IDENTIFIER '=' expression ';'    { printf("Declaration + Initilization\n"); }
+            | IDENTIFIER '=' expression ';' { printf("Assignment\n"); }
+            | IF '(' expression ')' statement   { printf("If-stmt\n"); }
             | IF '(' expression ')' statement
-              ELSE statement    { printf("If-else OK\n"); }
-            | WHILE '(' expression ')' statement    { printf("While-stmt OK\n"); }
-            | RETURN expression ';' { printf("Return OK\n"); }
+              ELSE statement    { printf("If-else\n"); }
+            | WHILE '(' expression ')' statement    { printf("While-stmt\n"); }
+            | RETURN expression ';' { printf("Return\n"); }
             | '{' statement_list '}'
             ;
 expression: expression '+' expression
@@ -64,3 +65,4 @@ int main(int argc,char *argv[]){
     yyparse();
     return 0;
 }
+
