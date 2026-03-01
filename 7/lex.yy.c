@@ -736,7 +736,7 @@ YY_RULE_SETUP
 case 3:
 YY_RULE_SETUP
 #line 8 "ll1.l"
-{ yylval.ch = '#'; return T; }
+{ yylval.ch='#'; return T; }
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */
@@ -752,12 +752,12 @@ YY_RULE_SETUP
 case 6:
 YY_RULE_SETUP
 #line 11 "ll1.l"
-{ yylval.ch = yytext[0]; return NT; }
+{ yylval.ch=yytext[0]; return NT; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 12 "ll1.l"
-{ yylval.ch = yytext[0]; return T; }
+{ yylval.ch=yytext[0]; return T; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
@@ -1772,4 +1772,8 @@ void yyfree (void * ptr )
 #line 13 "ll1.l"
 
 
-int yywrap() { return 1; }
+int yywrap(){
+    return 1;
+}
+
+

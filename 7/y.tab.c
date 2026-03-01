@@ -87,7 +87,6 @@ int tCount=0;
 
 char FIRST[MAX][MAX];
 char FOLLOW[MAX][MAX];
-
 int table[MAX][MAX];
 
 char curLHS=0;
@@ -271,7 +270,7 @@ void yyerror(const char *s){
     printf("Error: %s\n",s); 
 }
 
-#line 275 "y.tab.c"
+#line 274 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -338,10 +337,10 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 205 "ll1.y"
+#line 204 "ll1.y"
  char ch; 
 
-#line 345 "y.tab.c"
+#line 344 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -763,8 +762,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,   211,   211,   212,   215,   215,   223,   223,   224,   227,
-     228,   231,   236
+       0,   210,   210,   211,   214,   214,   222,   222,   223,   226,
+     227,   230,   235
 };
 #endif
 
@@ -1327,49 +1326,49 @@ yyreduce:
   switch (yyn)
     {
   case 4: /* $@1: %empty  */
-#line 215 "ll1.y"
+#line 214 "ll1.y"
          {
             curLHS=(yyvsp[0].ch);
             curRHS[0]='\0';
             addNT((yyvsp[0].ch));
       }
-#line 1337 "y.tab.c"
+#line 1336 "y.tab.c"
     break;
 
   case 5: /* line: NT $@1 ARROW rhs NL  */
-#line 220 "ll1.y"
+#line 219 "ll1.y"
                    { saveProd(); }
-#line 1343 "y.tab.c"
+#line 1342 "y.tab.c"
     break;
 
   case 6: /* $@2: %empty  */
-#line 223 "ll1.y"
+#line 222 "ll1.y"
             { saveProd(); }
-#line 1349 "y.tab.c"
+#line 1348 "y.tab.c"
     break;
 
   case 11: /* symbol: NT  */
-#line 231 "ll1.y"
+#line 230 "ll1.y"
            {
               int l=strlen(curRHS);
               curRHS[l]=(yyvsp[0].ch); curRHS[l+1]='\0';
               addNT((yyvsp[0].ch));
           }
-#line 1359 "y.tab.c"
+#line 1358 "y.tab.c"
     break;
 
   case 12: /* symbol: T  */
-#line 236 "ll1.y"
+#line 235 "ll1.y"
             {
               int l=strlen(curRHS);
               curRHS[l]=(yyvsp[0].ch); curRHS[l+1]='\0';
               if ((yyvsp[0].ch)!='#') addT((yyvsp[0].ch));
           }
-#line 1369 "y.tab.c"
+#line 1368 "y.tab.c"
     break;
 
 
-#line 1373 "y.tab.c"
+#line 1372 "y.tab.c"
 
       default: break;
     }
@@ -1562,10 +1561,11 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 243 "ll1.y"
+#line 242 "ll1.y"
 
 
 int main() {
+    printf("Enter the Productions:\n");
     for(int i=0;i<MAX;i++){
         FIRST[i][0]='\0';
         FOLLOW[i][0]='\0';
@@ -1617,6 +1617,5 @@ int main() {
     } else {
         printf("Grammar is LL(1)\n");
     }
-
     return 0;
 }

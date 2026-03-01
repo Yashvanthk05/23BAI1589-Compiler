@@ -17,7 +17,6 @@ int tCount=0;
 
 char FIRST[MAX][MAX];
 char FOLLOW[MAX][MAX];
-
 int table[MAX][MAX];
 
 char curLHS=0;
@@ -243,6 +242,7 @@ symbol: NT {
 %%
 
 int main() {
+    printf("Enter the Productions:\n");
     for(int i=0;i<MAX;i++){
         FIRST[i][0]='\0';
         FOLLOW[i][0]='\0';
