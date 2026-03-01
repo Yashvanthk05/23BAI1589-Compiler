@@ -3,15 +3,13 @@
 %}
 
 %%
-[A-Z][a-zA-Z0-9]*      { yylval.sym = yytext[0]; return NONTERM; }
-[a-z()+*][a-zA-Z0-9]*  { yylval.sym = yytext[0]; return TERM; }
-"->"       { return ARROW; }
-"|"        { return OR; }
-"#"        { yylval.sym = '#'; return EPS; }
-"\n"       { return NEWLINE; }
-[ \t]      {}
+"->"        { return ARROW; }
+"|"         { return OR; }
+"#"         { yylval.ch = '#'; return T; }
+\n          { return NL; }
+[ \t]       { }
+[A-Z]       { yylval.ch = yytext[0]; return NT; }
+[a-z+*()$] { yylval.ch = yytext[0]; return T; }
 %%
 
-int yywrap() {
-    return 1;
-}
+int yywrap() { return 1; }

@@ -17,16 +17,15 @@ Node* newNode(char *v,Node *l,Node *r) {
     return newnode;
 }
 
-void printTree(Node *n,char *prefix,int isLeft) {
+void printTree(Node *n, char *prefix, int isLeft) {
     if (!n) return;
-    printf("%s%s%s\n",prefix,isLeft?"|-":"|_ ",n->val);
-    char pre[256];
-    printf("%s%s",prefix,isLeft?"│":"   ");
-    strcpy(pre,"");
-    if (n->left || n->right){
-        printTree(n->left,pre,1);
-        printTree(n->right,pre,0);
-    }
+    printf("%s", prefix);
+    printf("%s%s\n", isLeft ? "|-" : "|_ ", n->val);
+    char newPrefix[256];
+    if (isLeft) sprintf(newPrefix, "%s|  ", prefix);
+    else sprintf(newPrefix, "%s   ", prefix);
+    printTree(n->left, newPrefix, 1);
+    printTree(n->right, newPrefix, 0);
 }
 
 int yylex();
