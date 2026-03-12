@@ -30,7 +30,8 @@ void printTree(Node *n, char *prefix, int isLeft) {
 
 int yylex();
 void yyerror(char *s){
-    printf("Error\n");
+    printf(
+        "Error\n");
 }
 %}
 

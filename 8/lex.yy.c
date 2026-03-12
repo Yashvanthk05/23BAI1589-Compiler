@@ -444,8 +444,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "first_follow.l"
-#line 2 "first_follow.l"
+#line 1 "first.l"
+#line 2 "first.l"
 #include "y.tab.h"
 #line 451 "lex.yy.c"
 #line 452 "lex.yy.c"
@@ -665,7 +665,7 @@ YY_DECL
 		}
 
 	{
-#line 5 "first_follow.l"
+#line 5 "first.l"
 
 #line 671 "lex.yy.c"
 
@@ -726,48 +726,48 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 6 "first_follow.l"
+#line 6 "first.l"
 { return ARROW; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 7 "first_follow.l"
+#line 7 "first.l"
 { return OR; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 8 "first_follow.l"
+#line 8 "first.l"
 { yylval.ch = '@'; return T; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 9 "first_follow.l"
+#line 9 "first.l"
 { yylval.ch = '#'; return T; }
 	YY_BREAK
 case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
-#line 10 "first_follow.l"
+#line 10 "first.l"
 { return NL; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 11 "first_follow.l"
+#line 11 "first.l"
 { }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 12 "first_follow.l"
+#line 12 "first.l"
 { yylval.ch = yytext[0]; return NT; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 13 "first_follow.l"
+#line 13 "first.l"
 { yylval.ch = yytext[0]; return T; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 14 "first_follow.l"
+#line 14 "first.l"
 ECHO;
 	YY_BREAK
 #line 774 "lex.yy.c"
@@ -1775,10 +1775,11 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 14 "first_follow.l"
+#line 14 "first.l"
 
 
 int yywrap(){
   return 1;
 }
+
 

@@ -67,7 +67,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "first_follow.y"
+#line 1 "first.y"
 
 #include<stdio.h>
 #include<string.h>
@@ -80,131 +80,71 @@ char rhs[MAX][MAX];
 int  pcnt=0;
 
 char nonT[MAX];
-int ntCount=0;
-char Tset[MAX];
-int tCount=0;
+int  ntCount=0;
 
 char FIRST[MAX][MAX];
-char FOLLOW[MAX][MAX];
 
 char curLHS=0;
 char curRHS[MAX]="";
 
-int indexNT(char c){
-    for(int i=0;i<ntCount;i++)
+int idxNT(char c){
+    for(int i=0;i<ntCount;i++){
         if(nonT[i]==c) return i;
+    }
     return -1;
 }
 
-int indexT(char c){
-    for(int i=0;i<tCount;i++)
-        if(Tset[i]==c) return i;
-    return -1;
+void addNT(char c) {
+    if (idxNT(c)==-1) nonT[ntCount++]=c;
 }
 
-void addNT(char c){
-    if(indexNT(c)==-1) nonT[ntCount++]=c;
-}
-
-void addT(char c){
-    if(indexT(c)==-1) Tset[tCount++]=c;
-}
-
-void addToSet(char *set,char c){
-    if(!strchr(set, c)){
-        int l=strlen(set);
-        set[l]=c;set[l+1]='\0';
+void addToSet(char *set,char c) {
+    if(!strchr(set,c)){
+        int l=strlen(set); 
+        set[l]=c;
+        set[l+1]='\0';
     }
 }
 
-int inSet(char *set,char c){
-    return strchr(set,c)!=NULL;
-}
-
-void saveProd(){
-    if(curLHS==0 || curRHS[0]=='\0') return;
-    lhs[pcnt]=curLHS;
-    strcpy(rhs[pcnt],curRHS);
-    pcnt++;
-    curRHS[0]='\0';
+void saveProd() {
+    if (curLHS && curRHS[0]) {
+        lhs[pcnt] = curLHS;
+        strcpy(rhs[pcnt++], curRHS);
+    }
+    curRHS[0] = '\0';
 }
 
 void computeFirst(){
-    for(int i=0;i<ntCount;i++) FIRST[i][0]='\0';
+    for (int i=0;i<ntCount;i++) FIRST[i][0]='\0';
     int changed=1;
-    while(changed){
+    while (changed){
         changed=0;
-        for(int p=0;p<pcnt;p++){
-            int ai=indexNT(lhs[p]);
+        for (int p=0;p<pcnt;p++) {
+            int ai=idxNT(lhs[p]);
             char *r=rhs[p];
-            int pre=strlen(FIRST[ai]);
+            int prev=strlen(FIRST[ai]);
 
-            if(r[0]=='#'){
+            if (r[0]=='#'){
                 addToSet(FIRST[ai],'#');
-            } else {
+            }
+            else{
                 int allEps=1;
-                for(int j=0;r[j] && allEps;j++){
-                    allEps=0;
-                    if(!isupper(r[j])){
+                for (int j=0;r[j] && allEps;j++) {
+                    allEps = 0;
+                    if (!isupper(r[j])){
                         addToSet(FIRST[ai],r[j]);
-                    } else {
-                        int bi=indexNT(r[j]);
-                        if(bi==-1) continue;
-                        for(int k=0;FIRST[bi][k];k++)
-                            if(FIRST[bi][k]!='#')
+                    }
+                    else{
+                        int bi=idxNT(r[j]);
+                        for (int k=0;FIRST[bi][k];k++)
+                            if (FIRST[bi][k]!='#')
                                 addToSet(FIRST[ai],FIRST[bi][k]);
-                        if(inSet(FIRST[bi],'#')) allEps=1;
+                        if (strchr(FIRST[bi],'#')) allEps=1;
                     }
                 }
                 if(allEps) addToSet(FIRST[ai],'#');
             }
-            if((int)strlen(FIRST[ai])!=pre) changed=1;
-        }
-    }
-}
-
-void computeFollow() {
-    for (int i=0;i<ntCount;i++) FOLLOW[i][0]='\0';
-    addToSet(FOLLOW[0],'$');
-    addT('$');
-    int changed=1;
-    while(changed){
-        changed=0;
-        for(int p=0;p<pcnt;p++) {
-            char *r=rhs[p];
-            int ai=indexNT(lhs[p]);
-            for(int j=0;r[j];j++) {
-                if(!isupper(r[j])) continue;
-                int bi=indexNT(r[j]);
-                if(bi==-1) continue;
-                int pre=strlen(FOLLOW[bi]);
-                int allEps = 1;
-                for(int k=j+1;r[k]&&allEps;k++) {
-                    if(!isupper(r[k])) {
-                        if(r[k]=='#') {
-                            allEps=1;
-                        } else {
-                            addToSet(FOLLOW[bi],r[k]);
-                            allEps=0;
-                        }
-                    }
-                    else{
-                        int ci=indexNT(r[k]);
-                        if(ci==-1) continue;
-                        for(int m=0;FIRST[ci][m];m++)
-                            if(FIRST[ci][m]!='#')
-                                addToSet(FOLLOW[bi],FIRST[ci][m]);
-                        if(inSet(FIRST[ci],'#')) allEps=1;
-                        else allEps=0;
-                    }
-                }
-                if(allEps){
-                    for(int k=0;FOLLOW[ai][k];k++){
-                        addToSet(FOLLOW[bi],FOLLOW[ai][k]);
-                    }
-                }
-                if((int)strlen(FOLLOW[bi])!=pre) changed=1;
-            }
+            if((int)strlen(FIRST[ai])!=prev) changed=1;
         }
     }
 }
@@ -224,7 +164,7 @@ void printRHS(const char *s){
     for(int i=0;s[i];i++) printSym(s[i]);
 }
 
-#line 228 "y.tab.c"
+#line 168 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -291,10 +231,10 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 158 "first_follow.y"
+#line 98 "first.y"
  char ch; 
 
-#line 298 "y.tab.c"
+#line 238 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -714,10 +654,10 @@ static const yytype_int8 yytranslate[] =
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_uint8 yyrline[] =
+static const yytype_int8 yyrline[] =
 {
-       0,   163,   163,   163,   165,   165,   169,   169,   170,   173,
-     173,   175,   181
+       0,   103,   103,   103,   105,   105,   109,   109,   110,   113,
+     113,   115,   121
 };
 #endif
 
@@ -1280,46 +1220,46 @@ yyreduce:
   switch (yyn)
     {
   case 4: /* $@1: %empty  */
-#line 165 "first_follow.y"
+#line 105 "first.y"
          { curLHS = (yyvsp[0].ch); curRHS[0] = '\0'; addNT((yyvsp[0].ch)); }
-#line 1286 "y.tab.c"
+#line 1226 "y.tab.c"
     break;
 
   case 5: /* line: NT $@1 ARROW rhs NL  */
-#line 166 "first_follow.y"
+#line 106 "first.y"
                  { saveProd(); }
-#line 1292 "y.tab.c"
+#line 1232 "y.tab.c"
     break;
 
   case 6: /* $@2: %empty  */
-#line 169 "first_follow.y"
+#line 109 "first.y"
             { saveProd(); }
-#line 1298 "y.tab.c"
+#line 1238 "y.tab.c"
     break;
 
   case 11: /* symbol: NT  */
-#line 175 "first_follow.y"
+#line 115 "first.y"
            { 
             int l=strlen(curRHS);
             curRHS[l]=(yyvsp[0].ch);
             curRHS[l+1]='\0';
             addNT((yyvsp[0].ch));
            }
-#line 1309 "y.tab.c"
+#line 1249 "y.tab.c"
     break;
 
   case 12: /* symbol: T  */
-#line 181 "first_follow.y"
+#line 121 "first.y"
          {
             int l=strlen(curRHS);
             curRHS[l]=(yyvsp[0].ch);
             curRHS[l+1]='\0';
          }
-#line 1319 "y.tab.c"
+#line 1259 "y.tab.c"
     break;
 
 
-#line 1323 "y.tab.c"
+#line 1263 "y.tab.c"
 
       default: break;
     }
@@ -1512,7 +1452,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 187 "first_follow.y"
+#line 127 "first.y"
 
 
 int main(){
@@ -1520,7 +1460,6 @@ int main(){
     yyparse();
     saveProd();
     computeFirst();
-    computeFollow();
 
     printf("\nProductions:\n");
     for (int i=0;i<pcnt;i++){
@@ -1534,16 +1473,6 @@ int main(){
         printf("FIRST(%c) = { ",nonT[i]);
         for (int j=0;FIRST[i][j];j++){
             printSym(FIRST[i][j]);
-            printf(" ");
-        }
-        printf("}\n");
-    }
-
-    printf("\nFOLLOW set:\n");
-    for (int i=0;i<ntCount;i++) {
-        printf("FOLLOW(%c) = { ",nonT[i]);
-        for (int j=0;FOLLOW[i][j];j++){
-            printSym(FOLLOW[i][j]);
             printf(" ");
         }
         printf("}\n");

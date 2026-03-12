@@ -77,7 +77,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 158 "first_follow.y"
+#line 98 "first.y"
  char ch; 
 
 #line 84 "y.tab.h"
