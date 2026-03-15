@@ -61,9 +61,7 @@ void addFollow(char nt,char t){
 
 int first(const char *s,char *out){
     if(s[0]=='\0') return 1;
-
     char c=s[0];
-
     if(isTerminal(c)){
         if(!strchr(out,c)){
             int l=strlen(out);
@@ -72,16 +70,12 @@ int first(const char *s,char *out){
         }
         return 0;
     }
-
     int nullable=0;
-
     for(int i=0;i<num_prod;i++)
         if(prods[i].lhs==c)
             nullable|=first(prods[i].rhs,out);
-
     if(nullable)
         nullable=first(s+1,out);
-
     return nullable;
 }
 
@@ -100,13 +94,11 @@ void computeFollow(){
                 strcpy(rest,prods[p].rhs+i+1);
                 char firstSet[MAX_SYM]="";
                 int nullable=first(rest,firstSet);
-
                 for(int k=0;firstSet[k];k++)
                     if(!strchr(follow[(int)B],firstSet[k])){
                         addFollow(B,firstSet[k]);
                         change=1;
                     }
-
                 if(nullable)
                     for(int k=0;follow[(int)A][k];k++)
                         if(!strchr(follow[(int)B],follow[(int)A][k])){
@@ -126,7 +118,6 @@ int hasItem(State *st,Item it){
     for(int i=0;i<st->n;i++)
         if(sameItem(st->items[i],it))
             return 1;
-
     return 0;
 }
 
@@ -368,7 +359,6 @@ void parse(char *input){
             printf("ERROR (symbol '%c' not in parsing table)\n",look);
             return;
         }
-
         Entry e=action_table[stack[top]][col];
         if(e.type=='s'){
             printf("Shift s%d\n",e.val);
@@ -383,19 +373,15 @@ void parse(char *input){
             int gc=-1;
             for(int c=0;c<num_cols;c++)
                 if(col_sym[c]==nt){gc=c;break;}
-
             if(gc==-1){
                 printf("ERROR (goto column missing for %c)\n",nt);
                 return;
             }
-
             int ns=goto_table[stack[top]][gc];
-
             if(ns==-1){
                 printf("ERROR (goto undefined for state %d, symbol %c)\n",stack[top],nt);
                 return;
             }
-
             stack[++top]=ns;
         }
         else if(e.type=='a'){
