@@ -18,7 +18,18 @@ int isNumber(char *s) {
 }
 
 void parse(char *line, Expr *e) {
-    sscanf(line, "%s = %s %c %s", e->result, e->op1, &e->op, e->op2);
+    char temp1[10], temp2[10], temp3[10];
+    int count = sscanf(line, "%s = %s %s %s", e->result, temp1, temp2, temp3);
+    if (count == 2) {
+        strcpy(e->op1, temp1);
+        e->op = '=';
+        strcpy(e->op2, "");
+    }
+    else if (count == 4) {
+        strcpy(e->op1, temp1);
+        e->op = temp2[0];
+        strcpy(e->op2, temp3);
+    }
 }
 
 void printExpr(Expr e) {
